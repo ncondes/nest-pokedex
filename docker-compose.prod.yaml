@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  pokedex-app: # service name
+    depends_on:
+      - pokedex-db # depends on the database
+    build:
+      context: . # context of the dockerfile (current directory)
+      dockerfile: Dockerfile # dockerfile name
+    image: pokedex-docker # image name
+    container_name: pokedex-app # container name
+    restart: always # restart the container if it fails
+    ports:
+      - '${PORT}:${PORT}' # port mapping
+    # working_dir: /var/www/pokedex
+    environment:
+      MONGODB: ${MONGODB}
+      PORT: ${PORT}
+      DEFAULT_LIMIT: ${DEFAULT_LIMIT}
+    # volumes:
+    #   - ./:/var/www/pokedex # mount the current directory to the container (for development)
+
+  pokedex-db:
+    image: mongo:5
+    container_name: mongo-poke
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: nest-pokemon
+    volumes:
+      - ./mongo:/data/db # mount the mongo directory to the container (for development)

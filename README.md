@@ -74,6 +74,20 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## Prod
+
+1. Create .env.prod file
+2. Populate environment variables in deployment service
+3. Create new docker image
+
+```bash
+# build docker image
+$ docker compose -f docker-compose.prod.yaml --env-file .env.prod up -d --build
+
+# run docker image
+$ docker compose -f docker-compose.prod.yaml --env-file .env.prod up -d
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
